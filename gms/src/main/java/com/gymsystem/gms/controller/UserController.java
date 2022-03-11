@@ -18,7 +18,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.gymsystem.gms.constraints.SecurityConstant.JWT_TOKEN_HEADER;
+import static org.springframework.http.HttpStatus.OK;
 
 @RestController
 @RequestMapping(value ="/user")
@@ -45,7 +48,11 @@ public class UserController extends ExceptionHandling {
         HttpHeaders jwtHeader = getJwtHeader(userPrincipal);
         return  new ResponseEntity<>(loginUser,jwtHeader, HttpStatus.OK);
     }
-
+    @GetMapping("/list")
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getUsers();
+        return new ResponseEntity<>(users, OK);
+    }
     private HttpHeaders getJwtHeader(UserPrincipal userPrincipal) {
         HttpHeaders headers = new HttpHeaders();
         headers.add(JWT_TOKEN_HEADER,tokenProvider.generateJwtToken(userPrincipal));
