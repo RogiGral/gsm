@@ -5,7 +5,9 @@ import com.gymsystem.gms.exceptions.model.*;
 import com.gymsystem.gms.model.HttpResponse;
 import com.gymsystem.gms.model.User;
 import com.gymsystem.gms.model.UserPrincipal;
+import com.gymsystem.gms.model.Workout;
 import com.gymsystem.gms.service.UserService;
+import com.gymsystem.gms.service.WorkoutService;
 import com.gymsystem.gms.utility.JWTTokenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Date;
 import java.util.List;
 
 import static com.gymsystem.gms.constraints.FileConstant.*;
@@ -44,6 +47,8 @@ public class UserController extends ExceptionHandling {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JWTTokenProvider tokenProvider;
+
+
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) throws UsernameNotFoundException, EmailExistException, UsernameExistException {

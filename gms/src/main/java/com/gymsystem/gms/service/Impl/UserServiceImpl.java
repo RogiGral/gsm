@@ -105,14 +105,15 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     public User addNewUser(String firstName, String lastName, String username, String email, String role, boolean isNotLocked, boolean isActive, MultipartFile profileFile) throws EmailExistException, UsernameExistException, IOException, NotAnImageFileException {
         validateNewUsernameAndEmail(EMPTY, username, email);
         User user = new User();
-        String password = encodedPassword(generatePassword());
+        String password = generatePassword();
+        String encodedPassword = encodedPassword(password);
         user.setUserId(generateUserId());
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setJoinDate(new Date());
         user.setUsername(username);
         user.setEmail(email);
-        user.setPassword(password);
+        user.setPassword(encodedPassword);
         user.setActive(isActive);
         user.setNotLocked(isNotLocked);
         user.setRole(getRoleEnumName(role).name());

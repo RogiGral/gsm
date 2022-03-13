@@ -78,6 +78,15 @@ public class ExceptionHandling extends ErrorProperties {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
 
+    @ExceptionHandler(WorkoutExistException.class)
+    public ResponseEntity<HttpResponse> workoutExistException(WorkoutExistException exception) {
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+    @ExceptionHandler(WorkoutDateException.class)
+    public ResponseEntity<HttpResponse> workoutDateException(WorkoutDateException exception) {
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
+
     @ExceptionHandler(EmailNotFoundException.class)
     public ResponseEntity<HttpResponse> emailNotFoundException(EmailNotFoundException exception) {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
