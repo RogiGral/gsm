@@ -65,7 +65,6 @@ public class UserController extends ExceptionHandling {
     }
 
     @PostMapping("/add")
-    @PreAuthorize("hasAnyAuthority('user:create')")
     public ResponseEntity<User> addNewUser(@RequestParam("firstName") String firstName,
                                            @RequestParam("lastName") String lastName,
                                            @RequestParam("username") String username,
