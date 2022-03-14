@@ -39,43 +39,35 @@ public class WorkoutServiceImpl implements WorkoutService {
         return workoutRepository.findAll();
     }
 
-//    @Override
-//    public Workout createWorkout(String workoutName, String trainerUsername, String roomNumber, Date workoutStartDate, Date workoutEndDate) throws WorkoutDateException, WorkoutExistException {
-//        checkIfTrainerExists(trainerUsername);
-//        validateStartEndDate(workoutStartDate,workoutEndDate);
-//        checkIfWorkoutExists(StringUtils.EMPTY,workoutName,trainerUsername,roomNumber,workoutStartDate,workoutEndDate);
-//        Workout workout = new Workout();
-//        workout.setWorkoutName(workoutName);
-//        workout.setTrainerUsername(trainerUsername);
-//        workout.setRoomNumber(roomNumber);
-//        workout.setWorkoutStartDate(workoutStartDate);
-//        workout.setWorkoutEndDate(workoutEndDate);
-//        workoutRepository.save(workout);
-//        //wyslij mail do trenera odnosnie treningu; docelowo dodać do kalenarza
-//        return workout;
-//    }
     @Override
-    public Workout createWorkout(String workoutName){
+    public Workout createWorkout(String workoutName, String trainerUsername, String roomNumber, Date workoutStartDate, Date workoutEndDate) throws WorkoutDateException, WorkoutExistException {
+        checkIfTrainerExists(trainerUsername);
+        validateStartEndDate(workoutStartDate,workoutEndDate);
+        checkIfWorkoutExists(StringUtils.EMPTY,workoutName,trainerUsername,roomNumber,workoutStartDate,workoutEndDate);
         Workout workout = new Workout();
         workout.setWorkoutName(workoutName);
+        workout.setTrainerUsername(trainerUsername);
+        workout.setRoomNumber(roomNumber);
+        workout.setWorkoutStartDate(workoutStartDate);
+        workout.setWorkoutEndDate(workoutEndDate);
         workoutRepository.save(workout);
         //wyslij mail do trenera odnosnie treningu; docelowo dodać do kalenarza
         return workout;
     }
 
-//    @Override
-//    public Workout updateWorkout(String currentWorkoutName, String newWorkoutName, String newTrainerUsername, String newRoomNumber, Date newWorkoutStartDate, Date newWorkoutEndDate) throws WorkoutDateException, WorkoutExistException {
-//        checkIfTrainerExists(newTrainerUsername);
-//        validateStartEndDate(newWorkoutStartDate,newWorkoutEndDate);
-//        Workout workout = checkIfWorkoutExists(currentWorkoutName,newWorkoutName,newTrainerUsername,newRoomNumber,newWorkoutStartDate,newWorkoutEndDate);
-//        workout.setWorkoutName(newWorkoutName);
-//        workout.setTrainerUsername(newTrainerUsername);
-//        workout.setRoomNumber(newRoomNumber);
-//        workout.setWorkoutStartDate(newWorkoutStartDate);
-//        workout.setWorkoutEndDate(newWorkoutEndDate);
-//        workoutRepository.save(workout);
-//        return workout;
-//    }
+    @Override
+    public Workout updateWorkout(String currentWorkoutName, String newWorkoutName, String newTrainerUsername, String newRoomNumber, Date newWorkoutStartDate, Date newWorkoutEndDate) throws WorkoutDateException, WorkoutExistException {
+        checkIfTrainerExists(newTrainerUsername);
+        validateStartEndDate(newWorkoutStartDate,newWorkoutEndDate);
+        Workout workout = checkIfWorkoutExists(currentWorkoutName,newWorkoutName,newTrainerUsername,newRoomNumber,newWorkoutStartDate,newWorkoutEndDate);
+        workout.setWorkoutName(newWorkoutName);
+        workout.setTrainerUsername(newTrainerUsername);
+        workout.setRoomNumber(newRoomNumber);
+        workout.setWorkoutStartDate(newWorkoutStartDate);
+        workout.setWorkoutEndDate(newWorkoutEndDate);
+        workoutRepository.save(workout);
+        return workout;
+    }
 
     @Override
     public void deleteWorkout(Long id) {
@@ -98,11 +90,11 @@ public class WorkoutServiceImpl implements WorkoutService {
         }
     }
 
-//    private Workout checkIfWorkoutExists(String currentWorkout, String workoutName, String trainerUsername, String roomNumber, Date workoutStartDate, Date workoutEndDate) throws WorkoutExistException {
-//        Workout workout = workoutRepository.findWorkoutByWorkoutNameAndRoomNumberAndWorkoutEndDateAndWorkoutStartDateAndTrainerUsername(workoutName,roomNumber,workoutEndDate,workoutStartDate,trainerUsername);
-//        if (workout != null) {
-//            throw new WorkoutExistException(WORKOUT_ALREADY_EXISTS + workoutName);
-//        }
-//        return workout;
-//    }
+    private Workout checkIfWorkoutExists(String currentWorkout, String workoutName, String trainerUsername, String roomNumber, Date workoutStartDate, Date workoutEndDate) throws WorkoutExistException {
+        Workout workout = workoutRepository.findWorkoutByWorkoutNameAndRoomNumberAndWorkoutEndDateAndWorkoutStartDateAndTrainerUsername(currentWorkout,roomNumber,workoutEndDate,workoutStartDate,trainerUsername);
+        if (workout != null) {
+            throw new WorkoutExistException(WORKOUT_ALREADY_EXISTS + workoutName);
+        }
+        return workout;
+    }
 }

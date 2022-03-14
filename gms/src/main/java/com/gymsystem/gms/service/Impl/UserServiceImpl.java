@@ -35,7 +35,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 import static com.gymsystem.gms.constraints.FileConstant.*;
 import static com.gymsystem.gms.constraints.UserImplConstant.*;

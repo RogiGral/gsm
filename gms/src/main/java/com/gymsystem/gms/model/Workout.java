@@ -24,9 +24,9 @@ public class Workout {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Long id;
     private String workoutName;
-//    private String trainerUsername;
-//    private String roomNumber;
-//    private Date workoutStartDate;
-//    private Date workoutEndDate;
+    private String trainerUsername;
+    private String roomNumber;
+    private Date workoutStartDate;
+    private Date workoutEndDate;
 
 }

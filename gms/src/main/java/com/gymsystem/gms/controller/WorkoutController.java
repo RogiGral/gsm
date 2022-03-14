@@ -23,8 +23,12 @@ public class WorkoutController {
     private WorkoutService workoutService;
 
     @PostMapping("/add")
-    public ResponseEntity<Workout> addNewWorkout(@RequestParam("workoutName") String workoutName){
-        Workout newWorkout = workoutService.createWorkout(workoutName);
+    public ResponseEntity<Workout> addNewWorkout(@RequestParam("workoutName") String workoutName,
+                                                    @RequestParam("trainerUsername") String trainerUsername,
+                                                    @RequestParam("roomNumber") String roomNumber,
+                                                    @RequestParam("workoutStartDate") Date workoutStartDate,
+                                                    @RequestParam("workoutEndDate") Date workoutEndDate) throws WorkoutDateException, WorkoutExistException {
+        Workout newWorkout = workoutService.createWorkout(workoutName,trainerUsername,roomNumber,workoutStartDate,workoutEndDate);
         return new ResponseEntity<>(newWorkout, OK);
     }
     @GetMapping("/list")
