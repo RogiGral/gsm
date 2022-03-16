@@ -11,6 +11,7 @@ import com.gymsystem.gms.service.WorkoutService;
 import com.gymsystem.gms.utility.JWTTokenProvider;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,6 @@ public class UserController extends ExceptionHandling {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JWTTokenProvider tokenProvider;
-
 
     @PostMapping("/register")
     public ResponseEntity<User> register(@RequestBody User user) throws UsernameNotFoundException, EmailExistException, UsernameExistException {

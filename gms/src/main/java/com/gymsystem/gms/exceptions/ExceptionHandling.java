@@ -82,6 +82,10 @@ public class ExceptionHandling extends ErrorProperties {
     public ResponseEntity<HttpResponse> workoutExistException(WorkoutExistException exception) {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());
     }
+    @ExceptionHandler(WorkoutNotFoundException.class)
+    public ResponseEntity<HttpResponse> workoutExistException(WorkoutNotFoundException exception) {
+        return createHttpResponse(BAD_REQUEST, exception.getMessage());
+    }
     @ExceptionHandler(WorkoutDateException.class)
     public ResponseEntity<HttpResponse> workoutDateException(WorkoutDateException exception) {
         return createHttpResponse(BAD_REQUEST, exception.getMessage());

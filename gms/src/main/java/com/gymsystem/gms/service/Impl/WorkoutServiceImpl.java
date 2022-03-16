@@ -3,6 +3,7 @@ package com.gymsystem.gms.service.Impl;
 import com.gymsystem.gms.enumeration.Role;
 import com.gymsystem.gms.exceptions.model.WorkoutDateException;
 import com.gymsystem.gms.exceptions.model.WorkoutExistException;
+import com.gymsystem.gms.exceptions.model.WorkoutNotFoundException;
 import com.gymsystem.gms.model.User;
 import com.gymsystem.gms.model.Workout;
 import com.gymsystem.gms.repository.UserRepository;
@@ -19,8 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.gymsystem.gms.constraints.UserImplConstant.*;
-import static com.gymsystem.gms.constraints.WorkoutConstraints.WORKOUT_ALREADY_EXISTS;
-import static com.gymsystem.gms.constraints.WorkoutConstraints.WORKOUT_DATE_INVALID;
+import static com.gymsystem.gms.constraints.WorkoutConstraints.*;
 
 @Service
 @Transactional
@@ -70,7 +70,11 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     @Override
-    public void deleteWorkout(Long id) {
+    public void deleteWorkout(Long id) throws WorkoutNotFoundException {
+        Workout workout = workoutRepository.findWorkoutById(id);
+        if(workout == null){
+            throw new WorkoutNotFoundException(NO_WORKOUT_FOUND_BY_ID+id);
+        }
         workoutRepository.deleteById(id);
     }
     private void checkIfTrainerExists(String trainerUsername) {
@@ -91,10 +95,19 @@ public class WorkoutServiceImpl implements WorkoutService {
     }
 
     private Workout checkIfWorkoutExists(String currentWorkout, String workoutName, String trainerUsername, String roomNumber, Date workoutStartDate, Date workoutEndDate) throws WorkoutExistException {
-        Workout workout = workoutRepository.findWorkoutByWorkoutNameAndRoomNumberAndWorkoutEndDateAndWorkoutStartDateAndTrainerUsername(currentWorkout,roomNumber,workoutEndDate,workoutStartDate,trainerUsername);
-        if (workout != null) {
-            throw new WorkoutExistException(WORKOUT_ALREADY_EXISTS + workoutName);
+        if(currentWorkout.isEmpty()){
+            Workout workout = workoutRepository.findWorkoutByWorkoutNameAndRoomNumberAndWorkoutEndDateAndWorkoutStartDateAndTrainerUsername(workoutName,roomNumber,workoutEndDate,workoutStartDate,trainerUsername);
+            if (workout != null) {
+                throw new WorkoutExistException(WORKOUT_ALREADY_EXISTS + workoutName);
+            }
+            return workout;
         }
-        return workout;
+        else{
+            Workout workout = workoutRepository.findWorkoutByWorkoutNameAndRoomNumberAndWorkoutEndDateAndWorkoutStartDateAndTrainerUsername(currentWorkout,roomNumber,workoutEndDate,workoutStartDate,trainerUsername);
+            if (workout != null) {
+                throw new WorkoutExistException(WORKOUT_ALREADY_EXISTS + workoutName);
+            }
+            return workout;
+        }
     }
 }

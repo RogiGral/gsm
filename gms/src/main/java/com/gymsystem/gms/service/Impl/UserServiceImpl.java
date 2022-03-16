@@ -157,6 +157,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String password = generatePassword();
         user.setPassword(encodedPassword(password));
         userRepository.save(user);
+        LOGGER.info("New user password: " + password);
         //todo wyslij haslo na email
     }
 

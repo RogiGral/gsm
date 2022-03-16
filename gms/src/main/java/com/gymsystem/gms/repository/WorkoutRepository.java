@@ -10,6 +10,5 @@ import java.util.Date;
 @Repository
 public interface WorkoutRepository extends JpaRepository<Workout,Long> {
     Workout findWorkoutById(Long id);
-    Workout findWorkoutByWorkoutName(String workoutName);
     Workout findWorkoutByWorkoutNameAndRoomNumberAndWorkoutEndDateAndWorkoutStartDateAndTrainerUsername(String workoutName, String roomNumber, Date workoutEndDate, Date workoutStartDate, String trainerUsername);
 }
