@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-import static com.gymsystem.gms.constraints.WorkoutConstraints.WORKOUT_DOES_NOT_EXISTS;
+import static com.gymsystem.gms.constraints.WorkoutConstraint.WORKOUT_DOES_NOT_EXISTS;
 
 @Service
 @Transactional

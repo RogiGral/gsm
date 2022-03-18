@@ -20,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 
 import static com.gymsystem.gms.constraints.UserImplConstant.*;
-import static com.gymsystem.gms.constraints.WorkoutConstraints.*;
+import static com.gymsystem.gms.constraints.WorkoutConstraint.*;
 
 @Service
 @Transactional
