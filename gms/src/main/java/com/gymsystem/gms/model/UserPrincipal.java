@@ -42,6 +42,8 @@ public class UserPrincipal implements UserDetails {
         return this.user.isNotLocked();
     }
 
+    public String getRole(){return  this.user.getRole(); }
+
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
