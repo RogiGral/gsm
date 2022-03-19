@@ -43,7 +43,7 @@ public class UserController extends ExceptionHandling {
     private JWTTokenProvider tokenProvider;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) throws UsernameNotFoundException, EmailExistException, UsernameExistException {
+    public ResponseEntity<User> register(@RequestBody User user) throws EmailExistException, UsernameExistException, UserNotFoundException {
         User newUser =  userService.register(user.getFirstName(),user.getLastName(),user.getUsername(),user.getEmail());
         return  new ResponseEntity<>(newUser, HttpStatus.OK);
     }
@@ -69,7 +69,7 @@ public class UserController extends ExceptionHandling {
                                            @RequestParam("role") String role,
                                            @RequestParam("isActive") String isActive,
                                            @RequestParam("isNotLocked") String isNonLocked,
-                                           @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws UsernameExistException, EmailExistException, IOException, NotAnImageFileException {
+                                           @RequestParam(value = "profileImage", required = false) MultipartFile profileImage) throws EmailExistException, IOException, NotAnImageFileException, UserNotFoundException, UsernameExistException {
         User newUser = userService.addNewUser(firstName, lastName, username,email, role, Boolean.parseBoolean(isNonLocked), Boolean.parseBoolean(isActive), profileImage);
         return new ResponseEntity<>(newUser, OK);
     }
@@ -98,6 +98,12 @@ public class UserController extends ExceptionHandling {
     public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email) throws  EmailNotFoundException {
         userService.resetPassword(email);
         return response(OK, EMAIL_SENT + email);
+    }
+    @GetMapping("/setpassword/{email}/{password}")
+    public ResponseEntity<HttpResponse> resetPassword(@PathVariable("email") String email,
+                                                      @PathVariable("password") String password) throws  EmailNotFoundException {
+        userService.setNewPassword(email,password);
+        return response(OK, OLD_PASSWORD_CHANGED);
     }
 
     @DeleteMapping("/delete/{id}")

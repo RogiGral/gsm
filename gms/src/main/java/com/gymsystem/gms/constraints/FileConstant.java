@@ -12,4 +12,5 @@ public class FileConstant {
     public static final String NOT_AN_IMAGE_FILE = " is not an image file. Please upload an image file";
     public static final String TEMP_PROFILE_IMAGE_BASE_URL = "https://robohash.org/";
     public static final String EMAIL_SENT = "Email sent to: ";
+    public static final String OLD_PASSWORD_CHANGED = "Old password changed";
 }
